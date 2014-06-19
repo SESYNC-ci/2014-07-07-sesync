@@ -1,4 +1,5 @@
-2014-07-24-beacon
+Computational Summer Institute 2014 July 7-11 @SESYNC
 =================
 
-Data Carpentry workshop July 24-25 BEACON
+
+http://www.sesync.org/opportunities/computational-institute-2014
