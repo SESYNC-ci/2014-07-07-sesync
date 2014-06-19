@@ -10,11 +10,13 @@ startdate: 2014-07-07
 enddate: 2014-07-11
 registration: closed
 instructor: ["Mary Shelley", "Mike Smorul", "Ian Munoz"]
-assistant: ["Nick Magliocca", "Drew Hard"]
+assistant: ["Nick Magliocca", "Drew Hart"]
 contact: msmorul@sesync.org
 raw: raw.github.com/sesync-ci/2014-07-07-sesync/gh-pages
 eventbrite1: 
 eventbrite2: 
+twitter: #csisesync
+etherpad: https://etherpad.mozilla.org/sesync-2014-07-07
 ---
 <!--
     Edit the values in the parameter block above to be appropriate for your bootcamp.
@@ -94,13 +96,14 @@ Data Carpentry's teaching is hands-on, so participants are required to bring the
 -->
 <p>
   <strong>Requirements:</strong>
-  Participants must bring a laptop with a few specific software packages installed. If you will be traveling from out of town, you will need to make your own travel arrangements; note also that the course dates are right before the start of Duke graduation weekend, and therefore <strong>please secure needed accomodations before registering!</strong>
+  Participants must bring a laptop with a few specific software packages installed. Please follow all instructions from the SESYNC.</strong>
 </p>
 
 <!--
     This block automatically inserts a contact email address if one has been specified for the page.
     If one hasn't, this block inserts the generic contact address for Software Carpentry.
 -->
+{% if page.contact %}
 <p>
   <strong>Contact</strong>:
   Please email
@@ -111,11 +114,14 @@ Data Carpentry's teaching is hands-on, so participants are required to bring the
   {% endif %}
   for questions and information not covered here.
 </p>
+{% endif %}
 
-<p><strong>Twitter</strong>: #datacarpentry</p>
-<!--
-<p><strong>Etherpad</strong>: <a href="https://etherpad.mozilla.org/nescent-2014-05">https://etherpad.mozilla.org/nescent-2014-05</a></p>
--->
+{% if page.twitter %}
+<p><strong>Twitter</strong>: {{page.twitter}}</p>
+{% endif %}
+{% if page.etherpad %}
+<p><strong>Etherpad</strong>: <a href="{{page.etherpad}}">{{page.etherpad}}</a></p>
+{% endif %}
 
 {% if page.eventbrite1 %}
 <h2>Registration</h2>
