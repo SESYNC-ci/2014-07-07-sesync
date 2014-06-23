@@ -1,4 +1,4 @@
-2014-07-24-beacon
+2014-07-07-sesync
 =================
 
-Data Carpentry workshop July 24-25 BEACON
+Data Carpentry workshop July 07-11 SESYNC
