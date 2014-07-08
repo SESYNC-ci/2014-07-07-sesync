@@ -27,10 +27,9 @@ Database Management Systems
 ---------------------------
 
 There are a number of different database management systems for relational
-data. We're going to use SQLite today, but basically everything we teach you
+data. We're going to use SQLite today, but most everything we teach you
 will apply to the other database systems as well (e.g., MySQL, PostgreSQL, MS
-Access, Filemaker Pro). The only things that will differ are the details of
-exactly how to import and export data.
+Access, Filemaker Pro). The main differences are in the details of how to import and export data.
 
 
 The data
@@ -42,8 +41,8 @@ ants on the plant community.  The rodents are sampled on a series of 24 plots,
 with different experimental manipulations of which rodents are allowed to access
 the plots.
 
-This is a real dataset that has been used in over 100 publications.  I've
-simplified it just a little bit for the workshop, but you can download the
+This is a real dataset that has been used in over 100 publications.  It's been
+simplified just a little bit for the workshop, but you can download the
 [full dataset](http://esapubs.org/archive/ecol/E090/118/) and work with it using
 exactly the same tools we'll learn about today.
 
@@ -54,10 +53,11 @@ Database Design
 1. Order doesn't matter
 2. Every row-column combination contains a single *atomic* value, i.e., not
    containing parts we might want to work with separately.
-3. One field per type of information
+3. One field per type of information	
+	![](example.png)
 4. No redundant information
      * Split into separate tables with one table per class of information
-	 * Needs an identifier in common between tables â€“ shared column - to
+	 * Needs an identifier in common between tables – shared column - to
        reconnect (foreign key).
 
 
@@ -74,9 +74,9 @@ Import
 8. When asked if you want to modify the table, click **OK**
 9. Set the data types for each field
 
-***EXERCISE: Import the plots and species tables***
-
-You can also use this same approach to append new data to an existing table.
+***EXERCISE: Import the plots table, time permitting, the species table***  
+  
+You can also use this same approach to append new data to an existing table.  
 
 
 Basic queries
@@ -86,13 +86,13 @@ Here we have data on every individual that was captured at the site,
 including when they were captured, what plot they were captured on,
 their species ID, sex and weight in grams.
 
-Letâ€™s write an SQL query that selects only the year column from the surveys
+Let’s write an SQL query that selects only the year column from the surveys
 table.
 
     SELECT year FROM surveys;
 
 We have capitalized the words SELECT and FROM because they are SQL keywords.
-SQL is case insensitive, but it helps for readability â€“ good style.
+SQL is case insensitive, but it helps for readability – good style.
 
 If we want more information, we can just add a new column to the list of fields,
 right after SELECT:
@@ -130,14 +130,16 @@ example, we could round the values to make them easier to read.
 
     SELECT plot, species, sex, wgt, ROUND(wgt / 1000.0, 2) FROM surveys;
 
+The underlying data in the wgt column of the table does not change.  The query, which exists separately from the data, simply displays the calculation we requested in the query result window pane.
+
 ***EXERCISE: Write a query that returns
-             The year, month, day, speciesID and weight in mg***
+             the year, month, day, species ID, and weight in mg***
 
 Filtering
 ---------
 
-Databases can also filter data â€“ selecting only the data meeting certain
-criteria.  For example, letâ€™s say we only want data for the species Dipodomys
+Databases can also filter data – selecting only the data meeting certain
+criteria.  For example, let’s say we only want data for the species Dipodomys
 merriami, which has a species code of DM.  We need to add a WHERE clause to our
 query:
 
@@ -154,7 +156,7 @@ For example, suppose we want the data on Dipodomys merriami starting in the year
 
     SELECT * FROM surveys WHERE (year >= 2000) AND (species = "DM");
 
-Note that the parentheses arenâ€™t needed, but again, they help with readability.
+Note that the parentheses aren’t needed, but again, they help with readability.
 They also ensure that the computer combines AND and OR in the way that we
 intend.
 
@@ -171,15 +173,17 @@ which have species codes DM, DO, and DS we could combine the tests using OR:
 Saving & Exporting queries
 --------------------------
 
-* Exporting:  **Actions** button and choosing **Save Result to File**.
-* Save: **View** drop down and **Create View** 
+* Exporting:  **Actions** button and choosing **Save Result to File**.  
+[Results set saved as static, external text file.]
+* Save: **View** drop down and **Create View**.  
+[Result set of query saved dynamically as part of the database.  If underlying table that is queried changes, the view will change too.]
 
 
 Building more complex queries
 -----------------------------
 
 Now, lets combine the above queries to get data for the 3 Dipodomys species from
-the year 2000 on.  This time, letâ€™s use IN as one way to make the query easier
+the year 2000 on.  This time, let’s use IN as one way to make the query easier
 to understand.  It is equivalent to saying ``WHERE (species = "DM") OR (species
 = "DO") OR (species = "DS")``, but reads more neatly:
 
@@ -200,7 +204,7 @@ Sorting
 -------
 
 We can also sort the results of our queries by using ORDER BY.
-For simplicity, letâ€™s go back to the species table and alphabetize it by taxa.
+For simplicity, let’s go back to the species table and alphabetize it by taxa.
 
     SELECT * FROM species ORDER BY taxa ASC;
 
@@ -224,8 +228,8 @@ To truly be alphabetical, we might want to order by genus then species.
 Order of execution
 ------------------
 
-Another note for ordering. We donâ€™t actually have to display a column to sort by
-it.  For example, letâ€™s say we want to order by the species ID, but we only want
+Another note for ordering. We don’t actually have to display a column to sort by
+it.  For example, let’s say we want to order by the species ID, but we only want
 to see genus and species.
 
     SELECT genus, species FROM species ORDER BY taxon ASC;
@@ -258,10 +262,10 @@ rodents captured in 1999, ordered alphabetically by the species ID.***
 Aggregation
 -----------
 
-Aggregation allows us to combine results by grouping records based on value and
-calculating combined values in groups.
+Aggregation allows us to group records based on field values and
+calculate combined values in groups (or for a table as a whole).
 
-Letâ€™s go to the surveys table and find out how many individuals there are.
+Let’s go to the surveys table and find out how many individuals there are.
 Using the wildcard simply counts the number of records (rows)
 
     SELECT COUNT(*) FROM surveys
@@ -296,7 +300,7 @@ If we want to group by multiple fields, we give GROUP BY a comma separated list.
 ***2. Average weight of each species in each year**
 
 We can order the results of our aggregation by a specific column, including the
-aggregated column.  Letâ€™s count the number of individuals of each species
+aggregated column.  Let’s count the number of individuals of each species
 captured, ordered by the count
 
     SELECT species, COUNT(*)
@@ -312,7 +316,7 @@ To combine data from two tables we use the SQL JOIN command, which comes after
 the FROM command.
 
 We also need to tell the computer which columns provide the link between the two
-tables using the word ON.  What we want is to join the data with the same
+tables using the word ON.  We want to join data with the same
 species codes.
 
     SELECT *
@@ -329,7 +333,7 @@ have used a field name in a non-join query, we can use *table.colname*
 For example, what if we wanted information on when individuals of each
 species were captured, but instead of their species ID we wanted their
 actual species names.
-
+Z
     SELECT surveys.year, surveys.month, surveys.day, species.genus, species.species
     FROM surveys
     JOIN species ON surveys.species = species.species_id
@@ -338,8 +342,7 @@ actual species names.
    of every individual captured at the site***
 
 Joins can be combined with sorting, filtering, and aggregation.  So, if we
-wanted average mass of the individuals on each different type of treatment, we
-could do something like
+wanted average mass of the individuals on each type of plot, we could use
 
     SELECT plots.plot_type, AVG(surveys.wgt)
     FROM surveys
@@ -376,5 +379,11 @@ Q & A on Database Design (review if time)
 3. One field per type of information
 4. No redundant information
      * Split into separate tables with one table per class of information
-	 * Needs an identifier in common between tables â€“ shared column - to
+	 * Needs an identifier in common between tables – shared column - to
        reconnect (foreign key).
+
+
+1. Ordered list item
+2. Ordered list item
+
+    /* This is a code block */
