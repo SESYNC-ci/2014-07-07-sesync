@@ -1,4 +1,6 @@
+
 ```{r, echo=FALSE}
+require(knitr)
 opts_chunk$set(results='hide')
 ```
 # Data Carpentry R materials - 
